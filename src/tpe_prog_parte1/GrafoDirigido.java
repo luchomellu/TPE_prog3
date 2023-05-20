@@ -17,8 +17,9 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	
 	@Override
 	public void agregarVertice(int verticeId) {
-		//check si existe---listo
+		//checkeo si existe el vertice
 		if(!this.contieneVertice(verticeId)) {
+			//si no existe lo meto en la estructura
 			grafo.put(verticeId,new ArrayList<>());
 		}
 		else {
@@ -29,6 +30,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public void borrarVertice(int verticeId) {
 		//borrar arcos entrantes al vertice
+		/*
 		ArrayList<Arco<T>> arcos_eliminar = new ArrayList<>();
 		Iterator<Arco<T>> arcos = this.obtenerArcos();
 		while(arcos.hasNext()) {
@@ -45,15 +47,33 @@ public class GrafoDirigido<T> implements Grafo<T>{
 				this.borrarArco(arco.getVerticeOrigen(), arco.getVerticeDestino());
 		    }
 		}
+		*/
+		Iterator<Integer> vertices = this.obtenerVertices();
+		while(vertices.hasNext()) {
+			int ver = vertices.next();
+			ArrayList<Arco<T>> arcos = this.grafo.get(ver);
+			if(!arcos.isEmpty()) {
+				for(int i = 0 ; i < arcos.size() ; i++) {
+					Arco<T> aux = arcos.get(i);
+					if(aux.getVerticeDestino() == verticeId) {
+						arcos.remove(aux);
+						i = arcos.size();
+					}
+				}
+			}
+		}
+		
 		 
 		grafo.remove(verticeId);
 	}
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		//checkear si existe vertices y arco---listo
+		//checkeo si existe el vertice y no existe el arco
 		if(this.contieneVertice(verticeId1) && !this.existeArco(verticeId1, verticeId2)) {
+			//creo el arco
 			Arco<T> arco = new Arco<T>(verticeId1,verticeId2,etiqueta);
+			//agarro el vertice origen y le agrego el arco a su arraylist de arcos
 			this.grafo.get(verticeId1).add(arco);	
 			this.size_arcos++;
 		}
@@ -64,11 +84,13 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-		//check vertice 1--listo
+		//checkeo que exista el vertice 1
 		if(this.contieneVertice(verticeId1)) {
+			//me traigo un iterador para iterar sobre los arcos
 			Iterator<Arco<T>> arcos = this.obtenerArcos(verticeId1);
 			while(arcos.hasNext()) {
 				Arco<T> arco = arcos.next();
+				//si es el arco que yo busco
 				if (arco.getVerticeDestino() == verticeId2) {
 	                arcos.remove();
 	                this.size_arcos--;
@@ -136,6 +158,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
+		//ver para hacer mas simple
 		return new ArcoIterator<T>(grafo.entrySet().iterator());
 	}
 

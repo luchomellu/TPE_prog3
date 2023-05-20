@@ -11,33 +11,47 @@ public class test {
 		grafo.agregarVertice(4);
 		grafo.agregarVertice(5);
 		grafo.agregarVertice(6);
+		grafo.agregarVertice(7);
+		grafo.agregarVertice(9);
+		grafo.agregarVertice(10);
+		grafo.agregarVertice(30);
+		grafo.agregarVertice(78);
 		grafo.agregarArco(1, 2, null);
+		grafo.agregarArco(1, 1, null);
+		grafo.agregarArco(1, 10, null);
+		grafo.agregarArco(10, 5, null);
+		grafo.agregarArco(3, 1, null);
 		grafo.agregarArco(2, 3, null);
-		grafo.agregarArco(1, 5, null);
-		grafo.agregarArco(5, 6, null);
-		System.out.println(grafo.contieneVertice(1));
-		System.out.println(grafo.existeArco(1, 2));
-		System.out.println(grafo.existeArco(2, 1));
-		System.out.println(grafo.cantidadVertices());
-		System.out.println(grafo.cantidadArcos());
-		System.out.println();
+		grafo.agregarArco(2, 4, null);
+		grafo.agregarArco(4, 6, null);
+		grafo.agregarArco(4, 5, null);
+		grafo.agregarArco(4, 7, null);
+		grafo.agregarArco(3, 5, null);
+		grafo.agregarArco(5, 9, null);
+		grafo.agregarArco(3, 30, null);
+		grafo.agregarArco(7, 78, null);
+		grafo.agregarArco(78, 5, null);
+		grafo.borrarVertice(5);
+		
 		/*
 		Iterator<Integer> asd = grafo.obtenerAdyacentes(1);
 		while(asd.hasNext()) {
 			System.out.println(asd.next());
 		}
-		*/
+		
 		Iterator<Arco<T>> asd = grafo.obtenerArcos();
 		while(asd.hasNext()) {
 			System.out.println(asd.next());
-		}
+		} */
 		
 		ServicioDFS dfs = new ServicioDFS(grafo);
+		System.out.println("dfs");
 		System.out.println(dfs.dfsForest());
-		
 		ServicioBFS bfs = new ServicioBFS(grafo);
+		System.out.println("bfs");
 		System.out.println(bfs.bfsForest());
 		
+		/*
 		grafo.borrarVertice(5);
 		
 		System.out.println(dfs.dfsForest());
@@ -48,5 +62,10 @@ public class test {
 		while(asd2.hasNext()) {
 			System.out.println(asd2.next());
 		}
+		*/
+		/*
+		ServicioCaminos scam = new ServicioCaminos(grafo,1,5,0);
+		System.out.println(scam.caminos());
+		*/
 	}
 }

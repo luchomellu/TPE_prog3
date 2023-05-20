@@ -16,23 +16,25 @@ public class ServicioBFS {
 	public List<Integer> bfsForest() {
 		List<Integer> visitado = new ArrayList<>();
 		Stack<Integer> pila = new Stack<>();
-		
+		//Obtengo los vertices
 		Iterator<Integer> vertices = grafo.obtenerVertices();
 		while(vertices.hasNext()) {
+			//Tomo el primero
 			int ver = vertices.next();
 			if(!visitado.contains(ver)) {
+				//Lo agrego a los vertices visitados
 				visitado.add(ver);
 				pila.push(ver);
-				Iterator<Integer> aux = grafo.obtenerAdyacentes(ver);
 				while(!pila.isEmpty()) {
-					pila.pop();
-					while(aux.hasNext()) {
-						int ver_aux = aux.next();
-						if(!pila.contains(ver_aux)) {
-							pila.push(ver_aux);
-						}
-						if(!visitado.contains(ver_aux)) {
-							visitado.add(ver_aux);
+					//Me traigo todos los adyacentes
+					int ver_aux = pila.pop();
+					Iterator<Integer> adjs = grafo.obtenerAdyacentes(ver_aux);
+					
+					while(adjs.hasNext()) {
+						int adj = adjs.next();
+						if(!visitado.contains(adj)) {
+							visitado.add(adj);
+							pila.push(adj);
 						}
 					}
 				}

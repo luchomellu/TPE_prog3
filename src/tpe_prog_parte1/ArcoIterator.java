@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class ArcoIterator<T> implements Iterator<Arco<T>>{
+	//revisar si se puede hacer mas simple
 	private Iterator<Entry<Integer, ArrayList<Arco<T>>>> itr_vertices;
 	 private Iterator<Arco<T>> arrActual;
 	
