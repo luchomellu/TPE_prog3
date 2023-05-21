@@ -31,7 +31,6 @@ public class test {
 		grafo.agregarArco(3, 30, null);
 		grafo.agregarArco(7, 78, null);
 		grafo.agregarArco(78, 5, null);
-		grafo.borrarVertice(5);
 		
 		/*
 		Iterator<Integer> asd = grafo.obtenerAdyacentes(1);
