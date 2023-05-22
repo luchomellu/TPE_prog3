@@ -1,5 +1,6 @@
 package tpe_prog_parte1;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class test {
@@ -41,39 +42,54 @@ public class test {
 		System.out.println(bfs.bfsForest());
 		
 		ServicioCaminos scam = new ServicioCaminos(grafo,1,5,0);
-		System.out.println("Caminos de vertice 1 a 5 con limite 0");
+		System.out.println("\nCaminos de vertice 1 a 5 con limite 0");
 		System.out.println(scam.caminos());
 		
-		/*
-		Iterator<Integer> asd = grafo.obtenerAdyacentes(1);
-		while(asd.hasNext()) {
-			System.out.println(asd.next());
-		}
+		ServicioCaminos scam2 = new ServicioCaminos(grafo,1,5,1);
+		System.out.println("\nCaminos de vertice 1 a 5 con limite 1");
+		System.out.println(scam2.caminos());
 		
-		Iterator<Arco<T>> asd = grafo.obtenerArcos();
-		while(asd.hasNext()) {
-			System.out.println(asd.next());
-		} */
-		/*
-		ServicioDFS dfs = new ServicioDFS(grafo);
-		System.out.println("dfs");
-		System.out.println(dfs.dfsForest());
-		ServicioBFS bfs = new ServicioBFS(grafo);
-		System.out.println("bfs");
-		System.out.println(bfs.bfsForest());
-		*/
-		/*
+		ServicioCaminos scam3 = new ServicioCaminos(grafo,1,5,2);
+		System.out.println("\nCaminos de vertice 1 a 5 con limite 2");
+		System.out.println(scam3.caminos() + "\n");
+		
+		
+		Iterator<Integer> adj = grafo.obtenerAdyacentes(1);
+		ArrayList<Integer> arr_adj = new ArrayList<>();
+		while(adj.hasNext()) {
+			arr_adj.add(adj.next());
+		}
+		System.out.println("Adyacentes de 1 -> " + arr_adj);
+		
+		Iterator<Arco<T>> todos_arcos = grafo.obtenerArcos();
+		ArrayList<Arco<T>> arr_arc = new ArrayList<>();
+		while(todos_arcos.hasNext()) {
+			arr_arc.add(todos_arcos.next());
+		}
+		System.out.println("Todos los arcos -> " + arr_arc + "\n");
+		
+		System.out.println("Existe el vertice 5? -> " + grafo.contieneVertice(5) + "\n");
+		
+		System.out.println("Borro el vertice 5\n");
 		grafo.borrarVertice(5);
 		
-		System.out.println(dfs.dfsForest());
+		System.out.println("Existe el vertice 5? -> " + grafo.contieneVertice(5) + "\n");
 		
+		System.out.println("dfs");
+		System.out.println(dfs.dfsForest());
+		System.out.println("bfs");
 		System.out.println(bfs.bfsForest());
 		
-		Iterator<Arco<T>> asd2 = grafo.obtenerArcos();
-		while(asd2.hasNext()) {
-			System.out.println(asd2.next());
+		System.out.println("\nElimino arco de 7 -> 78");
+		grafo.borrarArco(7, 78);
+		
+		Iterator<Arco<T>> todos_arcos2 = grafo.obtenerArcos();
+		ArrayList<Arco<T>> arr_arc2 = new ArrayList<>();
+		while(todos_arcos2.hasNext()) {
+			arr_arc2.add(todos_arcos2.next());
 		}
-		*/
+		System.out.println("Todos los arcos -> " + arr_arc2);
+		
 		
 		
 		

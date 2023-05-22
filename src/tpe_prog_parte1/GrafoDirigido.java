@@ -139,9 +139,10 @@ public class GrafoDirigido<T> implements Grafo<T>{
 		* Complejidad: O(n) Donde n es la cantidad de arcos que tiene el vertice origen
 		* .
 		*/
-		ArrayList<Arco<T>> adyacentes = this.grafo.get(verticeId1);
-		for (Arco<T> arco : adyacentes) {
-			if(arco.getVerticeDestino() == (verticeId2)) {
+		Iterator<Arco<T>> arcos = this.obtenerArcos(verticeId1);
+		while(arcos.hasNext()) {
+			Arco<T> arco = arcos.next();
+			if(arco.getVerticeDestino() == verticeId2) {
 				return arco;
 			}
 		}
