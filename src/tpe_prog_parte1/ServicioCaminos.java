@@ -13,7 +13,11 @@ public class ServicioCaminos {
 		this.grafo = grafo;
 		this.origen = origen;
 		this.destino = destino;
-		this.lim = lim;
+		if(lim == 0) {
+			this.lim = -1;
+		}else {
+			this.lim = lim;
+		}
 		this.visitados = new ArrayList<>();
 	}
 	
@@ -23,7 +27,7 @@ public class ServicioCaminos {
 		resultado = buscarCaminos(this.origen, parcial, resultado);
 		return resultado;
 	}
-	
+
 	private List<List<Integer>> buscarCaminos(int ver, ArrayList<Integer> camino_p, List<List<Integer>> resultado){
 		this.lim--;
 		if (lim == 0) {
@@ -31,13 +35,13 @@ public class ServicioCaminos {
 			return resultado;
 		}
 		camino_p.add(ver);
-		System.out.println(ver + "<-- paso por aca");
+		//System.out.println(ver + "<-- paso por aca");
 		//Si es el destino
 		if (ver == this.destino) {
 			//Agrego el camino a la solucion
-			System.out.println("Encontre el destino");
+			//System.out.println("Encontre el destino");
 			resultado.add(new ArrayList<>(camino_p));
-			System.out.println(resultado+ "<-- camino completo");
+			//System.out.println(resultado+ "<-- camino completo");
 		} else {
 			Iterator<Integer> adyacentes = this.grafo.obtenerAdyacentes(ver);
 			while(adyacentes.hasNext()) {
@@ -51,7 +55,7 @@ public class ServicioCaminos {
 			}
 		}
 		camino_p.remove(camino_p.size()-1);
-		System.out.println(resultado+ "<-- camino cuando vuelvo");
+		//System.out.println(resultado+ "<-- camino cuando vuelvo");
 		return resultado;
 	}
 }

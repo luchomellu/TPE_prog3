@@ -32,6 +32,18 @@ public class test {
 		grafo.agregarArco(7, 78, null);
 		grafo.agregarArco(78, 5, null);
 		
+		ServicioDFS dfs = new ServicioDFS(grafo);
+		System.out.println("dfs");
+		System.out.println(dfs.dfsForest());
+		
+		ServicioBFS bfs = new ServicioBFS(grafo);
+		System.out.println("bfs");
+		System.out.println(bfs.bfsForest());
+		
+		ServicioCaminos scam = new ServicioCaminos(grafo,1,5,0);
+		System.out.println("Caminos de vertice 1 a 5 con limite 0");
+		System.out.println(scam.caminos());
+		
 		/*
 		Iterator<Integer> asd = grafo.obtenerAdyacentes(1);
 		while(asd.hasNext()) {
@@ -42,14 +54,14 @@ public class test {
 		while(asd.hasNext()) {
 			System.out.println(asd.next());
 		} */
-		
+		/*
 		ServicioDFS dfs = new ServicioDFS(grafo);
 		System.out.println("dfs");
 		System.out.println(dfs.dfsForest());
 		ServicioBFS bfs = new ServicioBFS(grafo);
 		System.out.println("bfs");
 		System.out.println(bfs.bfsForest());
-		
+		*/
 		/*
 		grafo.borrarVertice(5);
 		
@@ -62,9 +74,8 @@ public class test {
 			System.out.println(asd2.next());
 		}
 		*/
-		/*
-		ServicioCaminos scam = new ServicioCaminos(grafo,1,5,0);
-		System.out.println(scam.caminos());
-		*/
+		
+		
+		
 	}
 }
