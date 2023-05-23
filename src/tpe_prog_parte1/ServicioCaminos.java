@@ -13,17 +13,16 @@ public class ServicioCaminos {
 		this.grafo = grafo;
 		this.origen = origen;
 		this.destino = destino;
-		if(lim == 0) {
-			this.lim = -1;
-		}else {
-			this.lim = lim;
-		}
+		this.lim = lim;
 		this.visitados = new ArrayList<>();
 	}
 	
 	public List<List<Integer>> caminos(){
 		List<List<Integer>> resultado = new ArrayList<>();
 		ArrayList<Integer> parcial = new ArrayList<>();
+		if(this.lim == 0) {
+			this.lim = -1;
+		}
 		resultado = buscarCaminos(this.origen, parcial, resultado);
 		return resultado;
 	}
