@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ServicioCaminos {
 	private Grafo<?> grafo;
-	int origen,destino,lim;
+	private int origen,destino,lim;
 	private ArrayList<Arco<?>> visitados;
 	
 	public ServicioCaminos(Grafo<?> grafo, int origen, int destino, int lim) {

@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class GrafoDirigido<T> implements Grafo<T>{
 	
-	int size_arcos;
+	private int size_arcos;
 	
 	private HashMap<Integer,ArrayList<Arco<T>>> grafo;
 	
