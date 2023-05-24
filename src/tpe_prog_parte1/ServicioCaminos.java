@@ -20,9 +20,11 @@ public class ServicioCaminos {
 	public List<List<Integer>> caminos(){
 		List<List<Integer>> resultado = new ArrayList<>();
 		ArrayList<Integer> parcial = new ArrayList<>();
+		/*
 		if(this.lim == 0) {
 			this.lim = -1;
 		}
+		*/
 		resultado = buscarCaminos(this.origen, parcial, resultado);
 		return resultado;
 	}

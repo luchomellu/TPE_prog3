@@ -45,12 +45,12 @@ public class test {
 		System.out.println("\nCaminos de vertice 1 a 5 con limite 0");
 		System.out.println(scam.caminos());
 		
-		ServicioCaminos scam2 = new ServicioCaminos(grafo,1,5,1);
+		ServicioCaminos scam2 = new ServicioCaminos(grafo,1,1,1);
 		System.out.println("\nCaminos de vertice 1 a 5 con limite 1");
 		System.out.println(scam2.caminos());
 		
-		ServicioCaminos scam3 = new ServicioCaminos(grafo,1,5,2);
-		System.out.println("\nCaminos de vertice 1 a 5 con limite 2");
+		ServicioCaminos scam3 = new ServicioCaminos(grafo,1,5,5);
+		System.out.println("\nCaminos de vertice 1 a 5 con limite 5");
 		System.out.println(scam3.caminos() + "\n");
 		
 		

@@ -18,7 +18,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public void agregarVertice(int verticeId) {
 		/*
-		 *  Complejidad: O(2) 2 porque se suma la complejidad de contieneVertice que es O(1) 
+		 *  Complejidad: O(1) porque es la complejidad de contieneVertice que es O(1) 
 		 *  con la complejidad del put del hashmap que es O(1)
 		 *  */
 		//checkeo si existe el vertice
@@ -34,11 +34,9 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public void borrarVertice(int verticeId) {
 		/**
-		* Complejidad: O((n+m)+1) donde N es el total de vertices , M es el total de arcos y la suma 
+		* Complejidad: O(n*m) donde N es el total de vertices , M es el total de arcos y el producto 
 		* de estos dos es porque en el peor de los casos recorremos todos los vertices y todos los arcos para 
 		* encontrar un arco con destino al vertice a borrar.
-		* Se suma 1 en la complejidad por el acceso a memoria para borrar el vertice deseado
-		* .
 		*/
 		Iterator<Integer> vertices = this.obtenerVertices();
 		while(vertices.hasNext()) {
@@ -60,10 +58,8 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		/**
-		* Complejidad: O(1+1+(n+1)+1) = O((n+1)+3) Donde se accede de manera constante a la memoria una vez por cada
-		* busqueda de vertice, (n + 1) es la complejidad de existeArco y nuevamente se suma la constante 1 por el
-		* acceso a memoria para incorporar el nuevo arco
-		* .
+		* Complejidad: O(n) Donde se accede de manera constante a la memoria una vez por cada
+		* busqueda de vertice, la complejidad de existeArco y el acceso a memoria para incorporar el nuevo arco
 		*/
 		//checkeo si existe el vertice y no existe el arco
 		if(this.contieneVertice(verticeId1) && this.contieneVertice(verticeId2) && !this.existeArco(verticeId1, verticeId2)) {
@@ -80,7 +76,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	/**
-	* Complejidad: O(n + 1) Donde n constituye la iteracion de los arcos del vertice y 1 es el valor constante de
+	* Complejidad: O(n) Donde n constituye la iteracion de los arcos del vertice y el valor constante de
 	* contieneVertice
 	* .
 	*/
@@ -114,8 +110,8 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public boolean existeArco(int verticeId1, int verticeId2) {
 		/**
-		* Complejidad: O(n + 1) donde 1 es la constante de checkear si existe el vertice 
-		* y n es la totalidad de arcos del verticeId1 que se recorre
+		* Complejidad: O(n) donde es la constante de checkear si existe el vertice 
+		* y la totalidad de arcos del verticeId1 que se recorre
 		*/
 		//check vert1---listo
 		if(!this.contieneVertice(verticeId1)) {
@@ -179,7 +175,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
 		/**
-		* Complejidad: O(2) Es una constante de 2 para la creacion de cada uno de los iteradores
+		* Complejidad: O(1) Es una constante de 1 para la creacion de cada uno de los iteradores
 		* .
 		*/
 		return new AdjIterator<T>(obtenerArcos(verticeId));
@@ -188,7 +184,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
 		/**
-		* Complejidad: O(2) Es una constante de 2 para la creacion de cada uno de los iteradores
+		* Complejidad: O(1) Es una constante de 1 para la creacion de cada uno de los iteradores
 		* .
 		*/
 		return new ArcoIterator<T>(grafo.entrySet().iterator());
