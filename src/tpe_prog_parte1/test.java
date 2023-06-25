@@ -90,8 +90,5 @@ public class test {
 		}
 		System.out.println("Todos los arcos -> " + arr_arc2);
 		
-		
-		
-		
 	}
 }
