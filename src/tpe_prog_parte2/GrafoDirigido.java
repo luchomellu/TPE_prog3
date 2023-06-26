@@ -27,7 +27,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			grafo.put(verticeId,new ArrayList<>());
 		}
 		else {
-			System.out.println("Vertice " + verticeId + " ya existe");
+			//System.out.println("Vertice " + verticeId + " ya existe");
 		}
 	}
 

@@ -34,13 +34,14 @@ public class CSVReader {
 			Integer etiqueta = Integer.parseInt(line[2].trim());
 			
 			// Aca instanciar lo que necesiten en base a los datos leidos
+			
 			grafo.agregarVertice(origen);
 			grafo.agregarVertice(destino);
 			grafo.agregarArco(origen, destino, etiqueta);
-			
 		}
 		
 		RedBackGreedy asd = new RedBackGreedy(grafo);
+		asd.buscarSolucionBacktracking();
 		
 	}
 
