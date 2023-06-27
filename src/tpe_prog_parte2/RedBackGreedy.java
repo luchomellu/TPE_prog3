@@ -65,7 +65,15 @@ public class RedBackGreedy {
 			//con el arco aux en solucion
 			this.solucion_parcial.add(aux);
 			this.conjunto.remove(this.conjunto.indexOf(aux));
-			buscarBacktracking();
+			
+			if(solucion.isEmpty()) {
+				buscarBacktracking();
+			}
+			if((obtenerDistancia(this.solucion_parcial) < obtenerDistancia(this.solucion)) && !this.solucion.isEmpty()) {
+				buscarBacktracking();
+			}
+			
+			//buscarBacktracking();
 			this.solucion_parcial.remove(this.solucion_parcial.size()-1);
 			this.conjunto.add(0,aux);
 		}
@@ -80,11 +88,12 @@ public class RedBackGreedy {
 		return suma;
 	}
 
+	
 	private boolean esConexo(ArrayList<Arco<Integer>> solucion_parcial) {
 		if(solucion_parcial.isEmpty()) {
 			return false;
 		}
-		GrafoNoDirigido grafo_aux = new GrafoNoDirigido();
+		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido();
 		for(Arco<Integer> a : solucion_parcial) {
 			grafo_aux.agregarVertice(a.getVerticeOrigen());
 			grafo_aux.agregarVertice(a.getVerticeDestino());
@@ -99,6 +108,8 @@ public class RedBackGreedy {
 			}
 		}
 		return true;
+		
 	}
+	
 	
 }
