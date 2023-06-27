@@ -94,13 +94,16 @@ public class RedBackGreedy {
 			return false;
 		}
 		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido();
+		
 		for(Arco<Integer> a : solucion_parcial) {
 			grafo_aux.agregarVertice(a.getVerticeOrigen());
 			grafo_aux.agregarVertice(a.getVerticeDestino());
 			grafo_aux.agregarArco(a.getVerticeOrigen(), a.getVerticeDestino(), a.getEtiqueta());
 		}
+		
 		CheckGrafoConexo lol = new CheckGrafoConexo(grafo_aux);
 		List<Integer> resultado = lol.check();
+		
 		Iterator<Integer> itr = this.grafo.obtenerVertices();
 		while(itr.hasNext()) {
 			if(!resultado.contains(itr.next())) {
