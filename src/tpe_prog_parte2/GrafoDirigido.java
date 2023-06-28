@@ -70,7 +70,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			this.size_arcos++;
 		}
 		else {
-			System.out.println("Vertice " + verticeId1 + " no existe");
+			//System.out.println("Vertice " + verticeId1 + " no existe");
 		}
 	}
 
@@ -95,7 +95,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			}
 		}
 		else {
-			System.out.println("Vertice " + verticeId1 + " no existe");
+			//System.out.println("Vertice " + verticeId1 + " no existe");
 		}	
 	}
 
@@ -114,7 +114,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 		* y la totalidad de arcos del verticeId1 que se recorre
 		*/
 		//check vert1---listo
-		if(!this.contieneVertice(verticeId1)) {
+		if(this.contieneVertice(verticeId1)) {
 			Iterator<Arco<T>> arcos = this.obtenerArcos(verticeId1);
 			while(arcos.hasNext()) {
 				if(arcos.next().getVerticeDestino() == (verticeId2)) {
