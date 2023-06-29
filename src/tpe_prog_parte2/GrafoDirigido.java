@@ -43,11 +43,16 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			int ver = vertices.next();
 			ArrayList<Arco<T>> arcos = this.grafo.get(ver);
 			if(!arcos.isEmpty()) {
-				for(int i = 0 ; i < arcos.size() ; i++) {
-					Arco<T> aux = arcos.get(i);
-					if(aux.getVerticeDestino() == verticeId) {
-						arcos.remove(aux);
-						i = arcos.size();
+				if (ver == verticeId) {
+					this.size_arcos = this.size_arcos - arcos.size();
+				} else {
+					for(int i = 0 ; i < arcos.size() ; i++) {
+						Arco<T> aux = arcos.get(i);
+						if(aux.getVerticeDestino() == verticeId) {
+							this.size_arcos--;
+							arcos.remove(aux);
+							i = arcos.size();
+						}
 					}
 				}
 			}
@@ -70,7 +75,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			this.size_arcos++;
 		}
 		else {
-			//System.out.println("Vertice " + verticeId1 + " no existe");
+			//System.out.println("Vertice " + verticeId1 + " no existe o el arco ya existe");
 		}
 	}
 
