@@ -22,7 +22,7 @@ public class RedBackGreedy {
 		this.solucion_parcial = new ArrayList<>();
 		this.solucion = new ArrayList<>();
 		this.conjunto = new ArrayList<>();
-		
+		this.mayorDistancia = 999999;
 		this.contador = 0;
 		
 		Iterator<Arco<Integer>> itr = this.grafo.obtenerArcos();
@@ -89,7 +89,7 @@ public class RedBackGreedy {
 		
 	}
 	
-	public void buscarGreedyKruskal() {
+	public void buscarGreedy() {
 		this.solucion = new ArrayList<>();
 		this.contador = 0;
 		
@@ -112,7 +112,7 @@ public class RedBackGreedy {
 			this.mayorDistancia = obtenerDistancia(this.solucion);
 			System.out.println("");
 			System.out.println("Completado en: " + timer.stop() + "ms");
-			System.out.println("Greedy - Kruskal'ish");
+			System.out.println("Greedy");
 			System.out.println(this.solucion);
 			System.out.println(obtenerDistancia(this.solucion)+"kms");
 			System.out.println("Iteraciones: " + this.contador);

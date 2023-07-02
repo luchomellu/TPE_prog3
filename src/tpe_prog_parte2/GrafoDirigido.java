@@ -34,7 +34,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 	@Override
 	public void borrarVertice(int verticeId) {
 		/**
-		* Complejidad: O(n*m) donde N es el total de vertices , M es el total de arcos y el producto 
+		* Complejidad: O(n+m) donde N es el total de vertices , M es el total de arcos y el producto 
 		* de estos dos es porque en el peor de los casos recorremos todos los vertices y todos los arcos para 
 		* encontrar un arco con destino al vertice a borrar.
 		*/

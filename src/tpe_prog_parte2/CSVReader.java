@@ -38,7 +38,7 @@ public class CSVReader {
 		}
 		
 		RedBackGreedy asd = new RedBackGreedy(grafo);
-		asd.buscarGreedyKruskal();
+		asd.buscarGreedy();
 		asd.buscarSolucionBacktracking();
 		
 		
