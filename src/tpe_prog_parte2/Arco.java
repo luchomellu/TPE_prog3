@@ -1,6 +1,6 @@
 package tpe_prog_parte2;
 
-public class Arco<T> {
+public class Arco<T>{
 	private int verticeOrigen;
 	private int verticeDestino;
 	private T etiqueta;
@@ -26,4 +26,5 @@ public class Arco<T> {
 	public String toString(){
 		return verticeOrigen + " -> " + verticeDestino;
 	}
+	
 }

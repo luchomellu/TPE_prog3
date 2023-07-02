@@ -1,39 +1,50 @@
 package tpe_prog_parte2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class RedBackGreedy {
 	
 	private Grafo<Integer> grafo;
+	
 	private ArrayList<Arco<Integer>> solucion_parcial;
 	private ArrayList<Arco<Integer>> solucion;
 	private ArrayList<Arco<Integer>> conjunto;
+	
 	private int contador;
+	private int cant_vertices;
+	private int mayorDistancia;
 	
 	public RedBackGreedy(Grafo<Integer> grafo) {
 		this.grafo = grafo;
 		this.solucion_parcial = new ArrayList<>();
 		this.solucion = new ArrayList<>();
 		this.conjunto = new ArrayList<>();
+		
 		this.contador = 0;
+		
 		Iterator<Arco<Integer>> itr = this.grafo.obtenerArcos();
 		while(itr.hasNext()) {
 			this.conjunto.add(itr.next());
 		}
+		
+		this.cant_vertices = this.grafo.cantidadVertices();
 	}
 	
 	public void buscarSolucionBacktracking() {
-		//ArrayList<Arco<Integer>> conjunto = new ArrayList<>();
+		
 		this.solucion_parcial = new ArrayList<>();
 		this.solucion = new ArrayList<>();
 		this.contador = 0;
-		
-		//ArrayList<Arco<Integer>> solucion = new ArrayList<>();
-		//ArrayList<Arco<Integer>> solucion_parcial = new ArrayList<>();
+		this.mayorDistancia = 999999999;
+		Timer timer = new Timer();
+		timer.start();
 		buscarBacktracking();
+		
 		System.out.println("");
+		System.out.println("Completado en: " + timer.stop() + "ms");
 		System.out.println("Backtracking");
 		System.out.println(this.solucion);
 		System.out.println(obtenerDistancia(this.solucion)+"kms");
@@ -41,41 +52,38 @@ public class RedBackGreedy {
 	}
 	
 	private void buscarBacktracking() {
-		//System.out.println(this.contador);
-		//System.out.println(this.solucion_parcial + " <-- solucion parcial");
-		//System.out.println(this.solucion + " <-- solucion");
 		if(this.conjunto.isEmpty()) {
 			this.contador++;
+			if (contador % 1000000 == 0) {
+			    String mensaje = "El contador ha alcanzado " + (contador / 1000000) + " millones";
+			    System.out.println(mensaje);
+			}
 			if(esConexo(this.solucion_parcial)) {
-				//System.out.println("es conexo");
-				if(solucion.isEmpty()) {
-					this.solucion = new ArrayList<Arco<Integer>>(this.solucion_parcial);
+				if((obtenerDistancia(this.solucion_parcial) < this.mayorDistancia)) {
+					this.mayorDistancia = obtenerDistancia(this.solucion_parcial);
+					this.solucion.clear();
+					this.solucion.addAll(this.solucion_parcial);
 				}
-				else if((obtenerDistancia(this.solucion_parcial) < obtenerDistancia(this.solucion)) && !this.solucion.isEmpty()) {
-					//System.out.println(this.solucion_parcial + " <-- nueva mejor solucion");
-					this.solucion = new ArrayList<Arco<Integer>>(this.solucion_parcial);
-				}
-				
 			}
 		}
 		else {
 			Arco<Integer> aux = this.conjunto.get(0);
 			//sin el arco aux en solucion
 			this.conjunto.remove(this.conjunto.indexOf(aux));
-			buscarBacktracking();
-			this.conjunto.add(0,aux);
+			
+			//poda
+			if(obtenerDistancia(this.solucion_parcial) < this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
+				buscarBacktracking();
+			}
 			
 			//con el arco aux en solucion
 			this.solucion_parcial.add(aux);
-			this.conjunto.remove(this.conjunto.indexOf(aux));
 			
-			if(solucion.isEmpty()) {
+			//poda
+			if(obtenerDistancia(this.solucion_parcial) < this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
 				buscarBacktracking();
 			}
-			if((obtenerDistancia(this.solucion_parcial) < obtenerDistancia(this.solucion)) && !this.solucion.isEmpty()) {
-				buscarBacktracking();
-			}
-			
+
 			//buscarBacktracking();
 			this.solucion_parcial.remove(this.solucion_parcial.size()-1);
 			this.conjunto.add(0,aux);
@@ -87,8 +95,11 @@ public class RedBackGreedy {
 		this.solucion = new ArrayList<>();
 		this.contador = 0;
 		
+		Timer timer = new Timer();
+		timer.start();
+		
 		ArrayList<Arco<Integer>> arcosOrdenados = new ArrayList<>(this.conjunto);
-		sort(arcosOrdenados , 0 , arcosOrdenados.size() - 1);
+		Collections.sort(arcosOrdenados,new ComparadorEtiquetas());
 		
 		while(!arcosOrdenados.isEmpty() && !esConexo(solucion)) {
 			this.contador++;
@@ -101,21 +112,20 @@ public class RedBackGreedy {
 		
 		if(esConexo(solucion)) {
 			System.out.println("");
+			System.out.println("Completado en: " + timer.stop() + "ms");
 			System.out.println("Greedy - Kruskal'ish");
 			System.out.println(this.solucion);
 			System.out.println(obtenerDistancia(this.solucion)+"kms");
 			System.out.println("Iteraciones: " + this.contador);
 		}
 		else {
-			System.out.println("no funco algo");
+			System.out.println("No se encontro solucion");
 		}
 	}
 
 	private boolean sePuedeAgregar(Arco<Integer> aux) {
 		
-		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido();
-		
-		//this.solucion.add(aux);
+		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido<Integer>();
 		
 		for(Arco<Integer> a : this.solucion) {
 			grafo_aux.agregarVertice(a.getVerticeOrigen());
@@ -132,7 +142,7 @@ public class RedBackGreedy {
 		grafo_aux.agregarArco(aux.getVerticeOrigen(), aux.getVerticeDestino(), aux.getEtiqueta());
 		
 		checkBucle a = new checkBucle(grafo_aux);
-		return(!a.dfsForest());
+		return(!a.check());
 	}
 
 	private int obtenerDistancia(ArrayList<Arco<Integer>> solucion_parcial) {
@@ -150,7 +160,7 @@ public class RedBackGreedy {
 			return false;
 		}
 		
-		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido();
+		GrafoNoDirigido<Integer> grafo_aux = new GrafoNoDirigido<Integer>();
 		
 		for(Arco<Integer> a : solucion_parcial) {
 			grafo_aux.agregarVertice(a.getVerticeOrigen());
@@ -158,8 +168,8 @@ public class RedBackGreedy {
 			grafo_aux.agregarArco(a.getVerticeOrigen(), a.getVerticeDestino(), a.getEtiqueta());
 		}
 		
-		CheckGrafoConexo lol = new CheckGrafoConexo(grafo_aux);
-		List<Integer> resultado = lol.check();
+		CheckGrafoConexo claseCheckeo = new CheckGrafoConexo(grafo_aux);
+		List<Integer> resultado = claseCheckeo.check();
 		
 		Iterator<Integer> itr = this.grafo.obtenerVertices();
 		while(itr.hasNext()) {
@@ -167,83 +177,8 @@ public class RedBackGreedy {
 				return false;
 			}
 		}
-		return true;
 		
+		return true;
 	}
-	
-	void merge(ArrayList<Arco<Integer>> arr, int l, int m, int r){
-        // Find sizes of two subarrays to be merged
-        int n1 = m - l + 1;
-        int n2 = r - m;
- 
-        // Create temp arrays
-        //int L[] = new int[n1];
-        //int R[] = new int[n2];
-        ArrayList<Arco<Integer>> L = new ArrayList<>();
-        ArrayList<Arco<Integer>> R = new ArrayList<>();
- 
-        // Copy data to temp arrays
-        for (int i = 0; i < n1; ++i) {
-            //L[i] = arr[l + i];
-        	L.add(arr.get(l + i));
-        }
-        for (int j = 0; j < n2; ++j) {
-        	 //R[j] = arr[m + 1 + j];
-        	 R.add(arr.get(m + 1 + j));
-        } 
- 
-        // Merge the temp arrays
- 
-        // Initial indices of first and second subarrays
-        int i = 0, j = 0;
- 
-        // Initial index of merged subarray array
-        int k = l;
-        while (i < n1 && j < n2) {
-            if (L.get(i).getEtiqueta() <= R.get(j).getEtiqueta()) {
-                //arr[k] = L[i];
-            	arr.set(k, L.get(i));
-                i++;
-            }
-            else {
-                //arr[k] = R[j];
-            	arr.set(k, R.get(j));
-                j++;
-            }
-            k++;
-        }
-        // Copy remaining elements of L[] if any
-        while (i < n1) {
-            //arr[k] = L[i];
-        	arr.set(k, L.get(i));
-            i++;
-            k++;
-        }
-        // Copy remaining elements of R[] if any
-        while (j < n2) {
-            //arr[k] = R[j];
-        	arr.set(k, R.get(j));
-            j++;
-            k++;
-        }
-    }
- 
-    // Main function that sorts arr[l..r] using
-    // merge()
-    void sort(ArrayList<Arco<Integer>> arr, int l, int r){
-  
-        if (l < r) {
-            // Find the middle point
-            int m = l + (r - l) / 2;
- 
-            // Sort first and second halves
-            sort(arr, l, m);
-            sort(arr, m + 1, r);
- 
-            // Merge the sorted halves
-            merge(arr, l, m, r);
-        }
-    }
-	
 	
 }

@@ -16,8 +16,6 @@ public class CheckGrafoConexo {
 	}
 	
 	public List<Integer> check() {
-		
-		visitado.removeAll(visitado);
 		List<Integer> dfs = new ArrayList<>();
 		Iterator<Integer> vertices = grafo.obtenerVertices();
 
@@ -42,9 +40,7 @@ public class CheckGrafoConexo {
 					}
 				}
 			}
-			
 		}
-		
 		return dfs;
 	}
 }
