@@ -38,9 +38,9 @@ public class RedBackGreedy {
 		this.solucion_parcial = new ArrayList<>();
 		this.solucion = new ArrayList<>();
 		this.contador = 0;
-		this.mayorDistancia = 999999999;
 		Timer timer = new Timer();
 		timer.start();
+
 		buscarBacktracking();
 		
 		System.out.println("");
@@ -48,18 +48,15 @@ public class RedBackGreedy {
 		System.out.println("Backtracking");
 		System.out.println(this.solucion);
 		System.out.println(obtenerDistancia(this.solucion)+"kms");
-		System.out.println("Iteraciones: " + this.contador);
+		System.out.println("Llamados Recursivos: " + this.contador);
 	}
 	
 	private void buscarBacktracking() {
 		if(this.conjunto.isEmpty()) {
 			this.contador++;
-			if (contador % 1000000 == 0) {
-			    String mensaje = "El contador ha alcanzado " + (contador / 1000000) + " millones";
-			    System.out.println(mensaje);
-			}
+			
 			if(esConexo(this.solucion_parcial)) {
-				if((obtenerDistancia(this.solucion_parcial) < this.mayorDistancia)) {
+				if((obtenerDistancia(this.solucion_parcial) <= this.mayorDistancia)) {
 					this.mayorDistancia = obtenerDistancia(this.solucion_parcial);
 					this.solucion.clear();
 					this.solucion.addAll(this.solucion_parcial);
@@ -72,15 +69,16 @@ public class RedBackGreedy {
 			this.conjunto.remove(this.conjunto.indexOf(aux));
 			
 			//poda
-			if(obtenerDistancia(this.solucion_parcial) < this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
+			if(obtenerDistancia(this.solucion_parcial) <= this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
 				buscarBacktracking();
 			}
+			this.conjunto.add(0,aux);
 			
 			//con el arco aux en solucion
 			this.solucion_parcial.add(aux);
-			
+			this.conjunto.remove(this.conjunto.indexOf(aux));
 			//poda
-			if(obtenerDistancia(this.solucion_parcial) < this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
+			if(obtenerDistancia(this.solucion_parcial) <= this.mayorDistancia && this.solucion_parcial.size() <= this.cant_vertices-1) {
 				buscarBacktracking();
 			}
 
@@ -111,6 +109,7 @@ public class RedBackGreedy {
 		}
 		
 		if(esConexo(solucion)) {
+			this.mayorDistancia = obtenerDistancia(this.solucion);
 			System.out.println("");
 			System.out.println("Completado en: " + timer.stop() + "ms");
 			System.out.println("Greedy - Kruskal'ish");
@@ -172,6 +171,7 @@ public class RedBackGreedy {
 		List<Integer> resultado = claseCheckeo.check();
 		
 		Iterator<Integer> itr = this.grafo.obtenerVertices();
+		
 		while(itr.hasNext()) {
 			if(!resultado.contains(itr.next())) {
 				return false;

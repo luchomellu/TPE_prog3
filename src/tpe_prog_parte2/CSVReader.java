@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import tpe_prog_parte1.Arco;
 
 
 public class CSVReader {
@@ -25,7 +22,7 @@ public class CSVReader {
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent();
 		
-		GrafoNoDirigido<Integer> grafo = new GrafoNoDirigido<Integer>();
+		GrafoDirigido<Integer> grafo = new GrafoDirigido<Integer>();
 		
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
